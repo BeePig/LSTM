@@ -1,5 +1,4 @@
 import os
-import math
 import numpy as np
 import datetime as dt
 from numpy import newaxis
@@ -82,7 +81,10 @@ class Model():
 			callbacks=callbacks,
 			workers=1
 		)
-		
+		model_json = self.model.to_json()
+		with open("model.json", "w") as json_file:
+			json_file.write(model_json)
+
 		print('[Model] Training Completed. Model saved as %s' % save_fname)
 		timer.stop()
 

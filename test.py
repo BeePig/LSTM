@@ -29,7 +29,7 @@ def plot_results_multiple(predicted_data, true_data, prediction_len):
 
 
 def main():
-    configs = json.load(open('config_ixic.json', 'r'))
+    configs = json.load(open('config.json', 'r'))
     if not os.path.exists(configs['model']['save_dir']): os.makedirs(configs['model']['save_dir'])
 
     data = DataLoader(
@@ -83,4 +83,13 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    configs = json.load(open('config.json', 'r'))
+    if not os.path.exists(configs['model']['save_dir']): os.makedirs(configs['model']['save_dir'])
+
+    data = DataLoader(
+        os.path.join('data', configs['data']['filename']),
+        configs['data']['train_test_split'],
+        configs['data']['columns']
+    )
+    model = Model()
+    model.build_model(configs)
