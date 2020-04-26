@@ -19,6 +19,7 @@ class Model():
         print('[Model] Loading model from file %s' % filepath)
         self.model = load_model(filepath)
 
+
     def build_model(self, configs):
         timer = Timer()
         timer.start()
@@ -66,7 +67,7 @@ class Model():
         print('[Model] Training Completed. Model saved as %s' % save_fname)
         timer.stop()
 
-    def train_generator(self, data_gen, epochs, batch_size, steps_per_epoch, save_dir):
+    def train_generator(self,data_gen, epochs, batch_size, steps_per_epoch, save_dir, test_gen, steps_per_test):
         timer = Timer()
         timer.start()
         print('[Model] Training Started')
@@ -81,10 +82,13 @@ class Model():
             steps_per_epoch=steps_per_epoch,
             epochs=epochs,
             callbacks=callbacks,
-            workers=1
+            workers=1,
+            validation_data=test_gen,
+            validation_steps=steps_per_test,
+            validation_freq=1
         )
         model_json = self.model.to_json()
-        with open("model.json", "w") as json_file:
+        with open(save_dir + "/model.json", "w") as json_file:
             json_file.write(model_json)
 
         print('[Model] Training Completed. Model saved as %s' % save_fname)
@@ -121,5 +125,6 @@ class Model():
             curr_frame = curr_frame[1:]
             curr_frame = np.insert(curr_frame, [window_size - 2], predicted[-1], axis=0)
         return predicted
+
     def evaluate(self, x_test, y_test):
-        self.model.evaluate(x_test,y_test)
+        self.model.evaluate(x_test, y_test)
