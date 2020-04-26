@@ -2,15 +2,14 @@
 	"data": {
 		"filename": "CPITRNSL.csv",
 		"columns": [
-			"Close",
-			"Volume"
+			"CPITRNSL"
 		],
 		"sequence_length": 1,
 		"train_test_split": 0.85,
 		"normalise": true
 	},
 	"training": {
-		"epochs": 2,
+		"epochs": 50,
 		"batch_size": 32
 	},
 	"model": {

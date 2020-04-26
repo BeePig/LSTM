@@ -53,6 +53,8 @@ class DataLoader():
             len = self.len_train
         elif partition == 'test':
             len = self.len_test
+        if seq_len == 1:
+            seq_len = 2
         for e in range(epochs):
             for i in range(iter):
                 x_batch = []
