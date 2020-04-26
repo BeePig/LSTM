@@ -83,7 +83,7 @@ def main():
 
 
 if __name__ == '__main__':
-    configs = json.load(open('config.json', 'r'))
+    configs = json.load(open('config_ixic.json', 'r'))
     if not os.path.exists(configs['model']['save_dir']): os.makedirs(configs['model']['save_dir'])
 
     data = DataLoader(
@@ -91,5 +91,13 @@ if __name__ == '__main__':
         configs['data']['train_test_split'],
         configs['data']['columns']
     )
-    model = Model()
-    model.build_model(configs)
+    # model = Model()
+    # model.build_model(configs)
+    steps_per_epoch = math.ceil((data.len_train - configs['data']['sequence_length']) / configs['training']['batch_size'])
+    print(steps_per_epoch)
+    gen = data.gen(30,32,True, 50,steps_per_epoch )
+    count =  0
+    for x, y in gen:
+        count += 1
+        print("x shape:", x.shape,"y shape:",y.shape)
+    print(count)
