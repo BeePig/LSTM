@@ -29,7 +29,7 @@ def plot_results_multiple(predicted_data, true_data, prediction_len):
 
 
 def main():
-    configs = json.load(open('config.json', 'r'))
+    configs = json.load(open('config_cpitrnsl.json', 'r'))
     if not os.path.exists(configs['model']['save_dir']): os.makedirs(configs['model']['save_dir'])
 
     data = DataLoader(
