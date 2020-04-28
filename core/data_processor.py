@@ -15,7 +15,7 @@ class DataLoader():
         self.len_test = len(self.data_test)
         self.len_train_windows = None
 
-    def get_test_data(self, seq_len, normalise):
+    def get_test_data(self, seq_len, normalise, feature):
         '''
         Create x, y test data windows
         Warning: batch method, not generative, make sure you have enough memory to
@@ -29,7 +29,10 @@ class DataLoader():
         data_windows = self.normalise_windows(data_windows, single_window=False) if normalise else data_windows
 
         x = data_windows[:, :-1]
-        y = data_windows[:, -1, [0]]
+        if feature == 1:
+            y = data_windows[:,-1]
+        else:
+            y = data_windows[:, -1, [0]]
         return x, y
 
     def get_train_data(self, seq_len, normalise):
@@ -41,43 +44,36 @@ class DataLoader():
         data_x = []
         data_y = []
         for i in range(self.len_train - seq_len):
-            x, y = self._next_window(i, seq_len, normalise)
+            x, y = self._next_window('train',i, seq_len, normalise)
             data_x.append(x)
             data_y.append(y)
         return np.array(data_x), np.array(data_y)
 
-    def generate_data_batch(self, partition,seq_len, batch_size, normalise, epochs, iter):
+    def generate_data_batch(self, partition, seq_len, batch_size, normalise, epochs, iter,feature):
         '''Yield a generator of training data from filename on given list of cols split for train/test'''
-        len = 0
-        if partition == 'train':
-            len = self.len_train
-        elif partition == 'test':
-            len = self.len_test
-        if seq_len == 1:
-            seq_len = 2
+
         for e in range(epochs):
+            index = 0
             for i in range(iter):
                 x_batch = []
                 y_batch = []
-                index = 0
                 for b in range(batch_size):
-                    if index >= (len - seq_len):
-                        # stop-condition for a smaller final batch if data doesn't divide evenly
-                        yield np.array(x_batch), np.array(y_batch)
-                        index = 0
-                    x, y = self._next_window(i, seq_len, normalise)
+                    x, y = self._next_window(partition, index, seq_len, normalise,feature)
                     x_batch.append(x)
                     y_batch.append(y)
                     index += 1
                 yield np.array(x_batch), np.array(y_batch)
-                i += 1
-            e += 1
-    def _next_window(self, i, seq_len, normalise):
+
+
+    def _next_window(self, partition, i, seq_len, normalise, feature):
         '''Generates the next data window from the given index location i'''
-        window = self.data_train[i:i + seq_len]
+        window = self.data_train[i:i + seq_len] if partition == 'train' else self.data_test[i:i + seq_len]
         window = self.normalise_windows(window, single_window=True)[0] if normalise else window
         x = window[:-1]
-        y = window[-1, [0]]
+        if feature == 1:
+            y = window[-1]
+        else:
+            y = window[-1, [0]]
         return x, y
 
     def normalise_windows(self, window_data, single_window=False):

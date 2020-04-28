@@ -7,11 +7,12 @@
 		],
 		"sequence_length": 30,
 		"train_test_split": 0.85,
-		"normalise": true
+		"normalise": false,
+		"feature": 2
 	},
 	"training": {
 		"epochs": 100,
-		"batch_size": 32
+		"batch_size": 4
 	},
 	"model": {
 		"loss": "mse",
