@@ -126,10 +126,13 @@ def main():
     elif args.cpi_train:
         train('cpitrnsl')
     elif args.ixic_test:
-        test('ixic',"26042020-143630-e100.h5")
+        test('ixic', "26042020-143630-e100.h5")
     else:
-        test('cpitrnsl',"")
+        test('cpitrnsl', "")
 
 
 if __name__ == '__main__':
     main()
+
+
+
