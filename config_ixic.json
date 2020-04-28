@@ -7,7 +7,7 @@
 		],
 		"sequence_length": 30,
 		"train_test_split": 0.85,
-		"normalise": false,
+		"normalise": true,
 		"feature": 2
 	},
 	"training": {
