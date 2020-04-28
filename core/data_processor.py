@@ -35,7 +35,7 @@ class DataLoader():
             y = data_windows[:, -1, [0]]
         return x, y
 
-    def get_train_data(self, seq_len, normalise):
+    def get_train_data(self, seq_len, normalise, feature):
         '''
         Create x, y train data windows
         Warning: batch method, not generative, make sure you have enough memory to
@@ -44,7 +44,7 @@ class DataLoader():
         data_x = []
         data_y = []
         for i in range(self.len_train - seq_len):
-            x, y = self._next_window('train',i, seq_len, normalise)
+            x, y = self._next_window('train',i, seq_len, normalise, feature)
             data_x.append(x)
             data_y.append(y)
         return np.array(data_x), np.array(data_y)
