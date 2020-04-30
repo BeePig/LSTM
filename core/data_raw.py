@@ -31,3 +31,11 @@ def plot_raw_ixic():
     candlestick_ohlc(ax1, df_ohlc.values, width=5, colorup='g')
     ax2.fill_between(df_volume.index.map(mdates.date2num), df_volume.values, 0)
     plt.show()
+
+def plot_cpi():
+    configs = json.load(open('config_cpitrnsl.json', 'r'))
+    f = os.path.join('data', configs['data']['filename'])
+    ax = plt.gca()
+    df = pd.read_csv(f)
+    df.plot(x='DATE', y='CPITRNSL', kind='line', ax=ax)
+    plt.show()
