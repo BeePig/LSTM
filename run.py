@@ -104,6 +104,9 @@ def test(datatype, fmodel):
         feature=configs['data']['feature']
     )
     predictions = model.predict_point_by_point(x_test)
+    print(predictions.shape)
+    print(predictions[:4])
+    print(y_test[:5,:])
     plot_results(predictions, y_test)
 
 
@@ -126,13 +129,14 @@ def main():
     elif args.cpi_train:
         train('cpitrnsl')
     elif args.ixic_test:
-        test('ixic', "26042020-143630-e100.h5")
+        test('ixic', "10052020-075844-e100.h5")
     else:
         test('cpitrnsl', "")
 
 
 if __name__ == '__main__':
-    main()
+    test('ixic',"10052020-075844-e100.h5")
+    # main()
 
 
 
