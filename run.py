@@ -3,10 +3,13 @@ import json
 from keras.models import model_from_json
 import math
 import matplotlib.pyplot as plt
+
+from core import data_raw
 from core.data_processor import DataLoader
 from core.model import Model
 import argparse
 import numpy as np
+
 
 
 def plot_results(predicted_data, true_data):
@@ -135,8 +138,9 @@ def main():
 
 
 if __name__ == '__main__':
-    test('ixic',"10052020-075844-e100.h5")
+    # test('ixic',"10052020-075844-e100.h5")
     # main()
+    data_raw.plot_raw_ixic()
 
 
 
