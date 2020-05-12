@@ -134,13 +134,13 @@ def main():
     elif args.ixic_test:
         test('ixic', "10052020-075844-e100.h5")
     else:
-        test('cpitrnsl', "")
+        test('cpitrnsl', "10052020-095220-e100.h5")
 
 
 if __name__ == '__main__':
-    # test('ixic',"10052020-075844-e100.h5")
-    # main()
-    data_raw.plot_raw_ixic()
+
+    main()
+
 
 
 
